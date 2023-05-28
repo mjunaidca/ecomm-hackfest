@@ -4,13 +4,7 @@ export const productSize = {
     type: "document",
     title: "Product Size",
     fields: [
-        // {
-        //     name: "title",
-        //     validation: (Rule: any) => Rule.required(),
-        //     type: "string",
-        //     title: "Size Title",
-        //     description: "The name/title of the variant"
-        // },
+    
         {
             name: "size",
             type: "string",
