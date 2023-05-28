@@ -4,32 +4,16 @@ import Link from "next/link";
 import { CartIcon } from "./CartIcon";
 import { CiSearch } from "react-icons/ci";
 import MobileView from "./MobileView";
-
-export const navigation = [
-  {
-    title: "Male",
-    path: "/male",
-  },
-  {
-    title: "Female",
-    path: "/female",
-  },
-  {
-    title: "Kids",
-    path: "/kids",
-  },
-  {
-    title: "All Products",
-    path: "/products",
-  },
-];
+import {navigation} from "@/lib/data/navigation"
 
 export const NavBar = () => {
   return (
     <header className="container flex items-center py-6 md:py-3 px-4 sm:px-8 md:px-12 lg:px-16 mx-auto justify-between">
       <div>
         {/* Logo */}
+        <Link href='/'>
         <Image src={LOGO} alt="Dine Marketplace" className="h-6 w-36" />
+        </Link>
       </div>
         {/* Main Desktop Navigation */}
         <div
