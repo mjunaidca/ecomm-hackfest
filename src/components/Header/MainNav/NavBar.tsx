@@ -1,10 +1,8 @@
 "use client";
 import LOGO from "@/assets/LOGO.png";
 import Image from "next/image";
-import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { BsCart } from "react-icons/bs";
-import { Button } from "@/components/ui/button";
 import {CiSearch} from "react-icons/ci"
 
 export const navigation = [
@@ -40,7 +38,7 @@ export const NavBar = () => {
       <div>
         {/* Main Navigation */}
         <div className={`p-6 flex flex-col gap-y-3 text-base font-medium  `}>
-          <ul className="items-center flex justify-center space-x-8 xl:space-x-10">
+          <ul className="items-center flex justify-center md:space-x-8 lg:space-x-9 xl:space-x-12">
             {navigation.map((item: any, idx: any) => {
               return (
                 <li key={idx} className="text-gray-800 hover:text-gray-600">
@@ -56,7 +54,7 @@ export const NavBar = () => {
           </ul>
         </div>
       </div>
-      <div className='  w-full max-w-[200px] lg:max-w-xs'>
+      <div className='  w-full lg:max-w-xs xl:max-w-sm'>
         {/* Search Bar */}
 
         <SearchBar  />
@@ -87,7 +85,7 @@ const SearchBar = () => {
         type="text"
         id="icon"
         name="icon"
-        className="block w-full px-4 py-1 border border-gray-100 text-xs rounded-sm shadow-sm pl-8 xl:pl-11 bg-white"
+        className="flex w-full flex-grow px-4 py-1 border border-gray-100 text-xs rounded-sm shadow-sm pl-8 xl:pl-11 bg-white"
         placeholder="What are you looking for?"
       />
     </div>
