@@ -22,6 +22,10 @@ export default async function Home({params}: Props) {
   
   const product = await getProductData(slug);
 
+  if (!product){
+    return <div>No products Found!</div>;
+  }
+
   return (
     <main className="">
            <div >

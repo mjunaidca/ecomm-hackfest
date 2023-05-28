@@ -1,9 +1,9 @@
-"use client";
 import LOGO from "@/assets/LOGO.png";
 import Image from "next/image";
 import Link from "next/link";
-import { BsCart } from "react-icons/bs";
+import { CartIcon } from "./CartIcon";
 import { CiSearch } from "react-icons/ci";
+import MobileView from "./MobileView";
 
 export const navigation = [
   {
@@ -43,9 +43,11 @@ export const NavBar = () => {
       </div>
         {/* Cart */}
       <div  className="hidden md:flex">
-          <Cart />
+          <CartIcon />
       </div>
-        <div>{/* Mobile View */}</div>
+        <div className="md:hidden">{/* Mobile View */}
+        <MobileView navigation={navigation} />
+        </div>
     </header>
   );
 };
@@ -86,14 +88,3 @@ const DesktopNavigation = () => {
   );
 };
 
-const Cart = () => {
-  return (
-    <Link href="">
-      <div className="rounded-full">
-        <div className="rounded-full bg-gray-200 p-3 hover:bg-gray-200 ">
-          <BsCart className="text-black w-5 h-5 rounded-full  hover:scale-110" />
-        </div>
-      </div>
-    </Link>
-  );
-};
