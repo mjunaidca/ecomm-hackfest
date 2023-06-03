@@ -12,6 +12,7 @@ const getMaleProductData = async () => {
     title,
     mainImage,
     slug,
+    sku,
     "categoryTitle": category->title
 }`);
   return res;
@@ -24,6 +25,9 @@ export default async function Home() {
 
   if (!data) {
     return null;
+  }
+  {
+    console.log(data[0]);
   }
 
   return (
