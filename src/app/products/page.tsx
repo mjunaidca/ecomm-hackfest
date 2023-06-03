@@ -1,9 +1,5 @@
 import { client } from "@/lib/sanityClient";
-import Image from "next/image";
-import urlFor from "@/lib/urlFor";
 import { Image as IImage } from "sanity";
-import { urlForImage } from "../../../sanity/lib/image";
-import { Button } from "@/components/ui/button";
 import ProductCard from "@/components/shared/ProductCard";
 const getProductData = async () => {
   const res = await client.fetch(`*[_type == "product"] {
@@ -28,6 +24,9 @@ interface IProduct {
   category: {
     name: string;
   };
+  slug: {
+    current: string;
+  };
 }
 
 export default async function Home() {
@@ -41,7 +40,10 @@ export default async function Home() {
         }`}
       >
         {data.map((product: any, index: any) => (
-          <div key={index} className="">
+          <div
+            key={index}
+            className="transition-transform duration-700 hover:scale-105"
+          >
             <ProductCard product={product} />
           </div>
         ))}

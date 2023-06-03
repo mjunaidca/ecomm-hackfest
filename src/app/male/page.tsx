@@ -1,63 +1,53 @@
 import { client } from "@/lib/sanityClient";
-import Product from "../../../type";
-import urlFor from "@/lib/urlFor";
-import Link from "next/link";
-import Image from "next/image";
+import { Image as IImage } from "sanity";
+
+import ProductCard from "@/components/shared/ProductCard";
 
 const getMaleProductData = async () => {
   const res =
     await client.fetch(`*[_type == "product" && category->title == "Male"]{
-    price, 
-    _id,
-    title,
-    mainImage,
-    slug,
-    sku,
-    "categoryTitle": category->title
+      price, 
+      _id,
+      title,
+      mainImage,
+      type,
+      slug,
+      category->{
+        title
+      },
 }`);
   return res;
 };
 
-export default async function Home() {
-  const data: Product[] = await getMaleProductData();
-  //   console.log("MALE TITLE", data[0].title);
-  //   console.log("MALE TITLE", data[0].productDetails);
+interface IProduct {
+  title: string;
+  _id: any;
+  price: number;
+  mainImage: IImage;
+  category: {
+    name: string;
+  };
+  slug: {
+    current: string;
+  };
+}
 
-  if (!data) {
-    return null;
-  }
-  {
-    console.log(data[0]);
-  }
+export default async function Home() {
+  const data: IProduct[] = await getMaleProductData();
 
   return (
-    <main className="">
-      <div>
-        {data.map((product, index) => (
-          <div key={index}>
-            <h1>{product.title}</h1>
-            <p>SKU: {product.sku}</p>
-            <p>Price: {product.price}</p>
-            <p>Product Details: {product.productDetails}</p>
-            <Image
-              src={urlFor(product.mainImage).url()}
-              width={150}
-              height={200}
-              alt={product.mainImage.alt}
-            />
-            {/* <ul>
-                  {product.productCare.map((instruction, index) => (
-                    <li key={index}>{instruction}</li>
-                  ))}
-                </ul> */}
-            {/* <h2>Variants:</h2>
-                {product.variantImages && product.variantImages.map((variantImage, index) => (
-                  <div key={index}>
-                    <img src={variantImage.asset._ref} alt={variantImage.alt} />
-                    <p>{variantImage.caption}</p>
-                  </div>
-                ))} */}
-            <Link href={`./${product.slug.current}`}>View Product</Link>
+    <main className="container pb-1 px-2 mb-8 sm:px-5 md:px-10 lg:px-12 xl:px-16 py-10 flex sm:block items-center justify-center h-full">
+      <div
+        className={`grid grid-cols-1  sm:grid-cols-[repeat(2,auto)] lg:grid-cols-[repeat(3,auto)] xl:grid-cols-[repeat(4,auto)] justify-between sm:items-start gap-5 ${
+          data.length === 1 ? "items-center" : "items-start"
+        }`}
+      >
+        {data.map((product: any, index: any) => (
+          <div
+            key={index}
+            className="transition-transform duration-700 hover:scale-105"
+          >
+            <ProductCard product={product} />
           </div>
         ))}
       </div>
