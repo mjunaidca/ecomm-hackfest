@@ -2,24 +2,36 @@ import LOGO from "@/assets/LOGO.png";
 import Image from "next/image";
 import Link from "next/link";
 import { fooComp, fooContact, fooSupport } from "@/lib/data/footer";
+import { FaLinkedinIn, FaTwitter, FaFacebookF } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="flex flex-col  lg:flex-row container items-start py-6 md:py-7 px-4 sm:px-8 md:px-12 lg:px-16 mx-auto justify-between  ">
+    <div className="flex flex-col  lg:flex-row container items-start  justify-between mb-6 md:mb-12 py-6 md:py-3 ">
       {/* Logo */}
-      <div className=" basis-2/5 px-4 mt-7">
-        <Link href="/">
+      <div className=" basis-2/5 mt-5 py-5 md:pb-5 ">
+        <Link href="/" className="">
           <Image src={LOGO} alt="Dine Marketplace" className="h-6 w-36" />
         </Link>
         <p className="leading-7 [&:not(:first-child)]:mt-6 max-w-md">
           Small, artisan label that offers a thoughtfully curated collection of
           high quality everyday essentials made.
         </p>
-        <div className="py-7">;</div>
+        <div className="py-7 flex space-x-4">
+          <div className="text-xl bg-gray-100 rounded-lg p-3 cursor-pointer hover:text-gray-800">
+            <FaFacebookF className="text-gray-900" />
+          </div>
+          <div className="text-xl bg-gray-100 rounded-lg p-3 cursor-pointer hover:text-gray-800">
+            <FaTwitter className="text-gray-900" />
+          </div>
+          <div className="text-xl bg-gray-100 rounded-lg p-3 cursor-pointer hover:text-gray-800">
+            <FaLinkedinIn className="text-gray-900" />
+          </div>
+        </div>
+
         <div className="flex  items-center justify-center space-x-4"></div>
       </div>
-      <div className="basis-1/5 px-4 ">
-            <h4 className="scroll-m-20 py-5 md:pb-5  text-xl text-gray-600 font-semibold tracking-tight">
+      <div className="basis-1/5">
+        <h4 className="scroll-m-20 text-xl mt-5 py-5 md:pb-5 font-semibold text-gray-500 tracking-tight">
           {fooComp.label}
         </h4>
         <div className="space-y-4  ">
@@ -31,8 +43,8 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="basis-1/5 px-4  ">
-        <h4 className="scroll-m-20 text-xl py-5 md:pb-5 font-semibold text-gray-600 tracking-tight">
+      <div className="basis-1/5  ">
+        <h4 className="scroll-m-20 text-xl mt-5 py-5 md:pb-5 font-semibold text-gray-500 tracking-tight">
           {fooContact.label}
         </h4>{" "}
         <div className="space-y-4  ">
@@ -43,8 +55,8 @@ const Footer = () => {
           ))}
         </div>
       </div>
-      <div className="basis-1/5 px-4 ">
-        <h4 className="scroll-m-20 text-xl py-5 md:pb-5 font-semibold text-gray-600 tracking-tight">
+      <div className="basis-1/5 ">
+        <h4 className="scroll-m-20 text-xl mt-5 py-5 md:pb-5 font-semibold text-gray-500 tracking-tight">
           {fooSupport.label}
         </h4>
         <div className="space-y-4 ">
@@ -55,7 +67,6 @@ const Footer = () => {
           ))}
         </div>
       </div>
- 
     </div>
   );
 };
