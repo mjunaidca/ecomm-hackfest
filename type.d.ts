@@ -4,6 +4,7 @@ interface Slug {
 
 interface Reference {
     _ref: string;
+    _type: string;
 }
 
 interface Image {

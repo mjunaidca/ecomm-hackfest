@@ -1,6 +1,7 @@
 import { client } from "./sanityClient"
 import ImageUrlBuilder from "@sanity/image-url";
 
+// Personal discovered approah
 
 const builder = ImageUrlBuilder(client);
 
