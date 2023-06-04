@@ -15,11 +15,10 @@ const AddToCartForm: FC<{ product: any }> = ({ product }) => {
     });
     console.log("res", res);
     if (res.status === 200) {
-      toast.success("Added to cart");
+      toast.success(`${product.title} added to cart`);
     } else {
       toast.error("Something went wrong");
     }
-
   };
   return (
     <div>

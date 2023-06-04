@@ -8,6 +8,7 @@ interface Product {
   user_id: string;
   product_id: string;
   quantity: number;
+  price: number;
 }
 
 type ProductList = Product[];
@@ -40,22 +41,24 @@ export default async function CartPage() {
   const cartData: ProductList = querycartData.res;
 
   const productIds = getProductIds(cartData);
+  const uniqueCount = new Set(productIds).size;
 
   const productDetails: Product[] = await getCartProductDetails(productIds);
+  const totalSum = productDetails.reduce(
+    (total, product) => total + product.price,
+    0
+  );
 
   return (
     <main className="container min-h-screen pb-1 px-2 mb-8 sm:px-5 md:px-10 lg:px-12 xl:px-16 py-20">
       {/* Products In Cart */}
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-        Products In Cart
+        Shopping Cart
       </h3>
       <div className="flex py-6 flex-wrap sm:flex-nowrap items-start justify-between">
         <div className="basis-2/3 w-full">
           {productDetails.map((product: any, index: any) => (
-            <div
-              key={index}
-              className="transition-transform duration-700 hover:scale-105"
-            >
+            <div key={index} className="">
               <CartItemsCard product={product} />
             </div>
           ))}
@@ -66,12 +69,12 @@ export default async function CartPage() {
             Order Summary
           </h4>
           <div className="flex justify-between  space-x-4items-center [&:not(:first-child)]:mt-6">
-            <p className="leading-7 ">Quanity</p>
-            <p className="leading-7 ">Products</p>
+            <p className="leading-7 "> Quanity</p>
+            <p className="leading-7 "> {uniqueCount} Product</p>
           </div>
           <div className="flex justify-between items-center space-x-4 [&:not(:first-child)]:mt-6">
             <p className="leading-7 ">SubTotal</p>
-            <p className="leading-7 ">$</p>
+            <p className="leading-7 ">$ {totalSum}</p>
           </div>
           <Button className="rounded-none px-10 [&:not(:first-child)]:mt-6">
             {" "}
