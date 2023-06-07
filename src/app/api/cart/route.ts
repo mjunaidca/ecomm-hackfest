@@ -48,3 +48,25 @@ export const POST = async (request: NextRequest) => {
     }
 
 }
+
+export const DELETE = async (request: NextRequest) => {
+    const req = request.nextUrl;
+    console.log('SERVER ID', req.searchParams.get("product_id"));
+
+    const product_id = req.searchParams.get("product_id") as string;
+    const user_id = cookies().get("user_id")?.value as string;
+
+    if (!product_id || !user_id) return NextResponse.json({ message: "Missing required parameter" })
+
+    try {
+        const res = await db.delete(cartTable).where(
+            eq(cartTable.user_id, user_id)
+            && eq(cartTable.product_id, product_id)
+        )
+
+        return NextResponse.json({ message: "Product removed" }, { status: 200 })
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ message: "Something went wrong" })
+    }
+}
