@@ -18,7 +18,7 @@ const ProductCard: FC<{ product: any }> = ({ product }) => {
             width={250}
             height={400}
             className="max-h-[380px] max-w-[280px] sm:max-w-[250px] w-full object-cover"
-            alt={product.mainImage.alt}
+            alt={product.title}
           />
           <h4 className="text-lg pt-1 font-semibold overflow-auto whitespace-normal">
             {product.title}

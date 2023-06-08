@@ -21,7 +21,7 @@ const EditItemQuanity = ({ QTY, productId }: any) => {
     };
 
     updateQuantity();
-  }, [quantity]);
+  }, [quantity, productId]);
 
   return (
     <form className="cursor-pointer">

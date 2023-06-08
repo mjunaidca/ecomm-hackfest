@@ -1,18 +1,11 @@
-import { client } from "@/lib/sanityClient";
 import { Button } from "@/components/ui/button";
 import urlFor from "@/lib/urlFor";
 import Image from "next/image";
 import DeleteItem from "@/components/shared/DeleteItem";
-import { cookies } from "next/headers";
 import EditItemQuanity from "@/components/shared/EditItemQuanity";
 import { Image as IImage } from "sanity";
+import { getdbCartData } from "@/lib/dbCartData";
 
-interface DBCart {
-  id: string;
-  product_id: string;
-  quantity: number;
-  user_id: string;
-}
 interface IProduct {
   id: number;
   user_id: string;
@@ -25,44 +18,10 @@ interface IProduct {
   _id: string;
 }
 
-export async function getdbCartData() {
-  const res = await fetch(
-    `${process.env.Base_Url}/api/cart?user_id=${
-      cookies().get("user_id")?.value
-    }`
-  );
-  let data = await res.json();
-  let cartData = data.res;
-
-  // Extract product Ids from the cartData
-  const productIds = cartData.map((item: DBCart) => item.product_id);
-
-  // Fetch product details from Sanity
-  const products = await client.fetch(
-    `*[_type == 'product' && _id in $productIds]{
-        price, 
-        _id,
-        title,
-        mainImage,
-        type,
-        }`,
-    { productIds }
-  );
-
-  // Merge product details with cartData
-  cartData = cartData.map((item: DBCart) => {
-    const productDetail = products.find(
-      (product: any) => product._id === item.product_id
-    );
-    return { ...item, ...productDetail };
-  });
-
-  return cartData;
-}
-
-export default async function CartPage() {
+export default async function Home() {
   const querycartData: IProduct[] = await getdbCartData();
-  // console.log(querycartData);
+
+  if (!querycartData) return <div>No Products In Cart!</div>;
 
   const totalQuantity = querycartData.reduce(
     (total, item) => total + item.quantity,
