@@ -3,40 +3,78 @@ import { Button } from "@/components/ui/button";
 import urlFor from "@/lib/urlFor";
 import Image from "next/image";
 import DeleteItem from "@/components/shared/DeleteItem";
-import { getdbCartData } from "@/lib/dbCartData";
-interface Product {
-  user_id: string;
-  _id: string;
+import { cookies } from "next/headers";
+import EditItemQuanity from "@/components/shared/EditItemQuanity";
+import { Image as IImage } from "sanity";
+
+interface DBCart {
+  id: string;
+  product_id: string;
   quantity: number;
+  user_id: string;
+}
+interface IProduct {
+  id: number;
+  user_id: string;
+  product_id: string;
+  quantity: number;
+  title: string;
+  mainImage: IImage;
+  type: string;
   price: number;
+  _id: string;
 }
 
-function getProductIds(cartData: any[]): string[] {
-  return cartData.map((item) => item.product_id);
-}
+export async function getdbCartData() {
+  const res = await fetch(
+    `${process.env.Base_Url}/api/cart?user_id=${
+      cookies().get("user_id")?.value
+    }`
+  );
+  let data = await res.json();
+  let cartData = data.res;
 
-async function getCartProductDetails(productIds: string[]) {
+  // Extract product Ids from the cartData
+  const productIds = cartData.map((item: DBCart) => item.product_id);
+
+  // Fetch product details from Sanity
   const products = await client.fetch(
-    `*[_type == 'product' && _id in $productIds]`,
+    `*[_type == 'product' && _id in $productIds]{
+        price, 
+        _id,
+        title,
+        mainImage,
+        type,
+        }`,
     { productIds }
   );
 
-  return products;
+  // Merge product details with cartData
+  cartData = cartData.map((item: DBCart) => {
+    const productDetail = products.find(
+      (product: any) => product._id === item.product_id
+    );
+    return { ...item, ...productDetail };
+  });
+
+  return cartData;
 }
 
 export default async function CartPage() {
-  const querycartData = await getdbCartData();
-  const cartData: Product[] = querycartData.res;
+  const querycartData: IProduct[] = await getdbCartData();
+  console.log(querycartData);
 
-  const productIds = getProductIds(cartData);
-  const uniqueCount = new Set(productIds).size;
-
-  const productDetails: Product[] = await getCartProductDetails(productIds);
-
-  const totalSum = productDetails.reduce(
-    (total, product) => total + product.price,
+  const totalQuantity = querycartData.reduce(
+    (total, item) => total + item.quantity,
     0
   );
+  console.log(totalQuantity); // prints the total quantity
+
+  const totalPrice = querycartData.reduce(
+    (total, item) => total + item.quantity * item.price,
+    0
+  );
+  console.log(totalPrice); // prints the total price
 
   return (
     <main className="container min-h-screen pb-1 px-2 mb-8 sm:px-5 md:px-10 lg:px-12 xl:px-16 py-20">
@@ -46,15 +84,14 @@ export default async function CartPage() {
       </h3>
       <div className="flex py-6 flex-wrap sm:flex-nowrap items-start justify-between">
         <div className="basis-2/3 w-full">
-          {productDetails.map((product: any, index: any) => (
+          {querycartData.map((product: IProduct, index: any) => (
             <div key={index} className="flex py-6">
-            
               <div className="flex w-3/4  space-x-5">
                 <Image
                   src={urlFor(product.mainImage).url()}
                   width={200}
                   height={320}
-                  alt={product.mainImage.alt}
+                  alt={product.title}
                   className="max-h-[320px]   rounded-lg max-w-[200px] w-full object-cover"
                 />
                 {/* Heading */}
@@ -70,13 +107,21 @@ export default async function CartPage() {
                     5 Working Days
                   </p>
                   <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                    ${product.price}
+                    ${product.price * product.quantity}
                   </h4>
                 </div>
               </div>
               {/* Delete and Order Count */}
-              <div className="w-1/4 flex justify-end  ">
-                <DeleteItem productId={product._id} />
+              <div className="w-1/4 flex justify-between items-end flex-col ">
+                <div className="hover:pointer-events-auto cursor-pointer">
+                  <DeleteItem productId={product._id} />
+                </div>
+                <div>
+                  <EditItemQuanity
+                    QTY={product.quantity}
+                    productId={product._id}
+                  />
+                </div>
               </div>
             </div>
           ))}
@@ -85,14 +130,14 @@ export default async function CartPage() {
         <div className="w-full p-6 bg-gray-100 sm:w-auto">
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
             Order Summary
-          </h4>
+          </h4>{" "}
           <div className="flex justify-between  space-x-4items-center [&:not(:first-child)]:mt-6">
             <p className="leading-7 "> Quanity</p>
-            <p className="leading-7 "> {uniqueCount} Product</p>
+            <p className="leading-7 "> {totalQuantity} Product</p>
           </div>
           <div className="flex justify-between items-center space-x-4 [&:not(:first-child)]:mt-6">
             <p className="leading-7 ">SubTotal</p>
-            <p className="leading-7 ">$ {totalSum}</p>
+            <p className="leading-7 ">$ {totalPrice}</p>
           </div>
           <Button className="rounded-none px-10 [&:not(:first-child)]:mt-6">
             {" "}

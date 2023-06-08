@@ -6,23 +6,21 @@ const DeleteItem = (productId: any) => {
   const router = useRouter();
   const handleDeleteClick = async () => {
     const id = productId.productId;
-    console.log(id);
+    // console.log(id);
 
     const res = await fetch(
       `${process.env.Base_Url}/api/cart?product_id=${id}`,
       { method: "DELETE" }
     );
     const data = await res.json();
-    if (data) {
+    if (data.status === 200) {
       router.refresh();
     }
-
     return data;
   };
 
   return (
     <div>
-      {" "}
       <Trash2 className="w-6 h-6 text-black" onClick={handleDeleteClick} />
     </div>
   );

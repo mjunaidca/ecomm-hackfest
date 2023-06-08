@@ -71,8 +71,7 @@ const AddToCartForm: FC<{ product: any }> = ({ product }) => {
           ${product.price}
         </h3>
       </div>
-    </form>
-  );
+    </form> );
 };
 
 export default AddToCartForm;

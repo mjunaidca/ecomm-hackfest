@@ -18,11 +18,11 @@ export function Counter({ quantity, setQuantity }: ICounter) {
       >
         -
       </Button>
-      <span className="text-lg font-normal text-gray-500">{quantity}</span>{" "}
+      <span className="text-lg font-normal text-gray-900">{quantity}</span>{" "}
       <Button
         onClick={increment}
         type="button"
-        className="text-2xl w-8 h-8 bg-white p-1 border hover:bg-gray-200 rounded-full border-gray-900 font-medium text-gray-500 hover:text-gray-900 transition-colors"
+        className="text-2xl w-8 h-8 bg-white p-1  border-2 hover:bg-gray-200 rounded-full border-gray-900 font-medium text-gray-500 hover:text-gray-900 transition-colors"
       >
         +
       </Button>
