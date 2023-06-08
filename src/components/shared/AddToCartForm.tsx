@@ -9,17 +9,36 @@ const AddToCartForm: FC<{ product: any }> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const handleAddToCart = async (event: React.FormEvent) => {
     event.preventDefault();
-    const res = await fetch("/api/cart", {
-      method: "POST",
-      body: JSON.stringify({
-        product_id: product._id,
-        quantity: quantity,
-      }),
-    });
-    if (res.status === 200) {
-      toast.success(`${quantity} ${product.title} added to cart`);
-    } else {
-      toast.error("Something went wrong");
+    const validate = await fetch(
+      `${process.env.Base_Url}/api/validate?product_id=${product._id}`
+    );
+    const valres = await validate.json();
+    const validation = valres.status;
+    console.log(validation);
+
+    if (validation.length === 0) {
+      const res = await fetch("/api/cart", {
+        method: "POST",
+        body: JSON.stringify({
+          product_id: product._id,
+          quantity: quantity,
+        }),
+      });
+      if (res.status === 200) {
+        toast.success(`${quantity} ${product.title} added to cart`);
+      } else {
+        toast.error("Something went wrong");
+      }
+    } else if (validation.length > 0) {
+      const dbqty = validation[0].quantity;
+      const newQty = dbqty + quantity;
+      const res = await fetch(
+        `${process.env.Base_Url}/api/cart?product_id=${product._id}`,
+        { method: "PATCH", body: JSON.stringify({ quantity: newQty }) }
+      );
+      if (!res.ok) return;
+
+      toast.success(`${quantity} ${product.title} updated in cart`);
     }
   };
   return (
@@ -71,7 +90,8 @@ const AddToCartForm: FC<{ product: any }> = ({ product }) => {
           ${product.price}
         </h3>
       </div>
-    </form> );
+    </form>
+  );
 };
 
 export default AddToCartForm;

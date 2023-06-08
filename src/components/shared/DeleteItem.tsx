@@ -13,9 +13,10 @@ const DeleteItem = (productId: any) => {
       { method: "DELETE" }
     );
     const data = await res.json();
-    if (data.status === 200) {
-      router.refresh();
+    if (!data.ok) {
+      console.log("error");
     }
+    router.refresh();
     return data;
   };
 
