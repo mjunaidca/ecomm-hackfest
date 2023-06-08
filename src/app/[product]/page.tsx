@@ -68,7 +68,7 @@ export default async function Home({ params }: Props) {
   const slug = params.product;
 
   const product: IProduct = await getProductData(slug);
-  console.log(product);
+  // console.log(product);
 
   if (!product) {
     return <div>No products Found!</div>;

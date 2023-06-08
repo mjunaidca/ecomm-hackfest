@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 export const GET = async (request: NextRequest) => {
     const req = request.nextUrl;
     const uid = req.searchParams.get("user_id") as string;
+    // const uid = cookies().get("user_id")?.value as string;
     if (!uid) return NextResponse.json({ message: "Empty Add To Cart" })
     try {
         const res = await db.select().from(cartTable).where(eq(cartTable.user_id, uid))
@@ -57,24 +58,24 @@ export const PATCH = async (request: NextRequest) => {
     const quantity: number = data.quantity;
     const user_id = cookies().get("user_id")?.value as string;
 
-    console.log('====> productid, userid', product_id, user_id);
-    console.log('====> quanity', quantity);
+    // console.log('====> productid, userid', product_id, user_id);
+    // console.log('====> quanity', quantity);
 
     if (!product_id || !user_id) return NextResponse.json({ message: "Missing required parameter" })
 
     try {
-        console.log('CALL PATCH ========= DATA', data);
+        // console.log('CALL PATCH ========= DATA', data);
 
         const res = await db.update(cartTable).set({ quantity: quantity }).where(
             eq(cartTable.user_id, user_id)
             && eq(cartTable.product_id, product_id)
         ).returning();
 
-        console.log('PATCH ==+++====+++=== RES', res);
+        // console.log('PATCH ==+++====+++=== RES', res);
 
         return NextResponse.json({ message: "Product Quantity Update" }, { status: 200 })
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return NextResponse.json({ message: "Unabkle to Update quanitity!" })
     }
 

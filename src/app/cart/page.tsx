@@ -62,7 +62,7 @@ export async function getdbCartData() {
 
 export default async function CartPage() {
   const querycartData: IProduct[] = await getdbCartData();
-  console.log(querycartData);
+  // console.log(querycartData);
 
   const totalQuantity = querycartData.reduce(
     (total, item) => total + item.quantity,

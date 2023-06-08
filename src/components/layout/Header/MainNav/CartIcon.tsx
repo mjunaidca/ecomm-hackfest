@@ -1,6 +1,19 @@
+"use client";
 import Link from "next/link";
 import { FiShoppingCart } from "react-icons/fi";
-export const CartIcon = () => {
+
+export const revalidate = 10;
+
+async function getCart() {
+  const res = await fetch(`${process.env.Base_Url}/api/items`);
+  const cart = await res.json();
+  return cart;
+}
+
+export const CartIcon = async () => {
+  const cart = await getCart();
+  console.log("qty", cart);
+
   return (
     <Link href="/cart">
       <div className="rounded-full">
