@@ -10,7 +10,6 @@ interface Product {
   quantity: number;
   price: number;
 }
-type ProductList = Product[];
 
 function getProductIds(cartData: any[]): string[] {
   return cartData.map((item) => item.product_id);
@@ -27,7 +26,7 @@ async function getCartProductDetails(productIds: string[]) {
 
 export default async function CartPage() {
   const querycartData = await getdbCartData();
-  const cartData: ProductList = querycartData.res;
+  const cartData: Product[] = querycartData.res;
 
   const productIds = getProductIds(cartData);
   const uniqueCount = new Set(productIds).size;

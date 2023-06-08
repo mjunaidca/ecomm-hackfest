@@ -2,6 +2,53 @@ import AddToCartForm from "@/components/shared/AddToCartForm";
 import { client } from "@/lib/sanityClient";
 import urlFor from "@/lib/urlFor";
 import Image from "next/image";
+import { Image as IImage } from "sanity";
+
+interface IProductSize {
+  _key: string;
+  _type: string;
+  size: "XS" | "S" | "M" | "L" | "XL";
+  quantity: number;
+}
+
+interface ICategory {
+  _createdAt: string;
+  _rev: string;
+  _type: string;
+  _id: string;
+  title: string;
+  _updatedAt: string;
+  slug: ISlug;
+}
+
+interface ISlug {
+  _type: string;
+  current: string;
+}
+
+interface IAsset {
+  _ref: string;
+  _type: string;
+}
+
+interface IProduct {
+  _rev: string;
+  sku: string;
+  sizes: IProductSize[];
+  productCare: string[];
+  type: string;
+  _createdAt: string;
+  productDetails: string;
+  _id: string;
+  mainImage: IImage;
+  category: ICategory;
+  slug: ISlug;
+  _updatedAt: string;
+  _type: string;
+  title: string;
+  price: number;
+  variantImages?: IImage[];
+}
 
 const getProductData = async (slug: string) => {
   const res =
@@ -20,16 +67,17 @@ interface Props {
 export default async function Home({ params }: Props) {
   const slug = params.product;
 
-  const product: any = await getProductData(slug);
+  const product: IProduct = await getProductData(slug);
+  console.log(product);
 
   if (!product) {
     return <div>No products Found!</div>;
   }
 
   return (
-    <main className="container flex flex-col min-w-full min-h-screen bg-slate-50">
+    <main className="container flex flex-col min-w-full min-h-screen bg-slate-50 py-12 ">
       {/* Product Image  */}
-      <section className="flex flex-col lg:flex-row h-full my-20 ">
+      <section className="flex flex-col lg:flex-row h-full mb-20 ">
         {/* Image */}
         <div className="lg:basis-3/5 flex basis-full space-x-10">
           <div className="w-[15%] space-y-5 ">
@@ -38,7 +86,7 @@ export default async function Home({ params }: Props) {
                 src={urlFor(product.mainImage).url()}
                 width={135}
                 height={150}
-                alt={product.mainImage.alt}
+                alt={product.slug.current}
                 className="max-h-[150px] max-w-[135px] w-full object-cover"
               />
             </div>
@@ -64,7 +112,7 @@ export default async function Home({ params }: Props) {
               src={urlFor(product.mainImage).url()}
               width={578}
               height={520}
-              alt={product.mainImage.alt}
+              alt={product.title}
               className="max-h-screen max-w-full w-full object-cover"
             />
           </div>
@@ -73,30 +121,20 @@ export default async function Home({ params }: Props) {
         <div className="lg:basis-2/5 basis-full py-16 px-2 lg:px-5 xl:px-8 space-y-8">
           {/* Heading */}
           <div>
-            <h2 className="scroll-m-20 pb-1  text-2xl lg:text-3xl font-normal tracking-tight transition-colors first:mt-0">
+            <h2 className="scroll-m-20 pb-1  text-2xl lg:text-3xl xl:text-4xl font-normal tracking-tight transition-colors first:mt-0">
               {product.title}
             </h2>
-            <h3 className="scroll-m-20 text-xl lg:text-2xl font-semibold text-gray-400 tracking-tight">
+            <h3 className="scroll-m-20 text-xl xl:text-2xl  font-semibold text-gray-400 tracking-tight">
               {product.type}
             </h3>
           </div>
-          {/* Size */}
-          <div>
-            <h4 className="scroll-m-20 text-lg font-semibold ">Select Size</h4>
-          </div>
-          {/* Quantity */}
-          <div>
-            <h4 className="scroll-m-20 text-lg font-semibold ">Quantity</h4>
-          </div>
-          {/* Price */}
-          <div className="flex items-center space-x-4">
+          {/* Order Form */}
+          <>
             <AddToCartForm product={product} />
-            <h3 className="scroll-m-20 text-xl lg:text-2xl font-semibold text-gray-900 tracking-tight">
-              ${product.price}
-            </h3>
-          </div>
+          </>
         </div>
       </section>
+
       {/* Product Description */}
       <section className="flex flex-col bg-white  p-7 md:p-10">
         {/* Header */}
