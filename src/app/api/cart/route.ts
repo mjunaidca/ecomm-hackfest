@@ -27,12 +27,10 @@ export const POST = async (request: NextRequest) => {
     const setCookies = cookies();
     const user_id = cookies().get("user_id");
 
-
     if (!user_id) {
         setCookies.set("user_id", uid);
     }
     // console.log('USER ID', user_id);
-
 
     try {
         const res = await db.insert(cartTable).values({

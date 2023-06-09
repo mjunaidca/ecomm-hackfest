@@ -10,10 +10,8 @@ export const GET = async (request: NextRequest) => {
     if (!user_id) return NextResponse.json({ message: "Empty Add To Cart" })
     try {
         const status = await db.select({ quanity: cartTable.quantity }).from(cartTable).where(eq(cartTable.user_id, user_id))
-        console.log('====> status', status);
-        console.log(NextResponse.json(status));
-
-
+        // console.log('====> status', status);
+        // console.log(NextResponse.json(status));
 
         return NextResponse.json({ status })
     } catch (error) {

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 const EditItemQuanity = ({ QTY, productId }: any) => {
   const [quantity, setQuantity] = useState(QTY);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -24,9 +25,9 @@ const EditItemQuanity = ({ QTY, productId }: any) => {
   }, [quantity, productId]);
 
   return (
-    <form className="cursor-pointer">
+    <div className="cursor-pointer">
       <Counter quantity={quantity} setQuantity={setQuantity} />
-    </form>
+    </div>
   );
 };
 
