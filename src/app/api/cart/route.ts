@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuid } from "uuid";
 import { cartTable, db } from "@/lib/drizzle";
 import { cookies } from "next/headers";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 export const GET = async (request: NextRequest) => {
     const req = request.nextUrl;
@@ -19,6 +19,39 @@ export const GET = async (request: NextRequest) => {
     }
 }
 
+// export const POST = async (request: NextRequest) => {
+//     const req = await request.json();
+//     // console.log('POST SERVER ID', req.product_id);
+
+//     const uid = uuid();
+//     const setCookies = cookies();
+//     const user_id = cookies().get("user_id");
+
+//     if (!user_id) {
+//         setCookies.set("user_id", uid);
+//     }
+//     // console.log('USER ID', user_id);
+
+//     try {
+//         const res = await db.insert(cartTable).values({
+//             product_id: req.product_id,
+//             quantity: req.quantity,
+//             user_id: cookies().get("user_id")?.value as string,
+//         }).returning()
+
+//         return NextResponse.json({ res })
+//     } 
+
+
+
+//     catch (error) {
+
+//     }
+
+// }
+
+
+
 export const POST = async (request: NextRequest) => {
     const req = await request.json();
     // console.log('POST SERVER ID', req.product_id);
@@ -33,14 +66,63 @@ export const POST = async (request: NextRequest) => {
     // console.log('USER ID', user_id);
 
     try {
-        const res = await db.insert(cartTable).values({
-            product_id: req.product_id,
-            quantity: req.quantity,
-            user_id: cookies().get("user_id")?.value as string,
-        }).returning()
 
-        return NextResponse.json({ res })
-    } catch (error) {
+        if (user_id !== undefined) {
+            const productIdsArray = await db.select({ product_id: cartTable.product_id, user_id: cartTable.user_id, quantity: cartTable.quantity }).from(cartTable).where(eq(cartTable.user_id, cookies().get("user_id")?.value as string))
+            console.log('PRODUCT IDS ARRAY', productIdsArray);
+
+            const isProductInArray = productIdsArray.some(product => product.product_id === req.product_id);
+            const existingProductQuanity = productIdsArray.find(product => product.product_id === req.product_id)?.quantity;
+            console.log('EXISTING QTY', existingProductQuanity);
+            const newQTY = existingProductQuanity + req.quantity;
+
+            console.log('NEW', newQTY);
+
+
+            console.log(isProductInArray);
+
+            if (!isProductInArray) {
+
+                const res = await db.insert(cartTable).values({
+                    product_id: req.product_id,
+                    quantity: req.quantity,
+                    user_id: cookies().get("user_id")?.value as string,
+                }).returning()
+
+                return NextResponse.json({ res })
+            }
+            else {
+                const res = await db.update(cartTable).set({ quantity: newQTY }).where(
+                    and(eq(cartTable.user_id, cookies().get("user_id")?.value as string),
+                        eq(cartTable.product_id, req.product_id)
+                    )
+
+                ).returning();
+
+                return NextResponse.json({ res })
+
+            }
+
+
+
+        } else {
+
+            const res = await db.insert(cartTable).values({
+                product_id: req.product_id,
+                quantity: req.quantity,
+                user_id: cookies().get("user_id")?.value as string,
+            }).returning()
+
+            return NextResponse.json({ res })
+        }
+
+
+
+    }
+
+
+
+    catch (error) {
 
     }
 
