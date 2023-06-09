@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
+    // Base_Url: "https://ecomm-hackfest.vercel.app",
     Base_Url: "http://localhost:3000",
   },
   images: {

@@ -42,11 +42,11 @@ export default async function Home() {
       </h3>
 
       {querycartData && querycartData.length !== 0 ? (
-        <div className="flex py-6 flex-wrap sm:flex-nowrap items-start justify-between">
-          <div className="basis-2/3 w-full">
+        <div className="flex flex-col w-full lg:flex-row py-8 space-x-0 lg:space-x-4 xl:space-x-8 items-start justify-between">
+          <div className="basis-auto md:w-full lg:basis-2/3 w-full">
             {querycartData.map((product: IProduct, index: any) => (
-              <div key={index} className="flex py-6">
-                <div className="flex w-3/4  space-x-5">
+              <div key={index} className="flex flex-col sm:flex-row px-2 py-6">
+                <div className="flex flex-col md:flex-row w-full lg:w-2/4  space-x-5">
                   <Image
                     src={urlFor(product.mainImage).url()}
                     width={200}
@@ -54,8 +54,10 @@ export default async function Home() {
                     alt={product.title}
                     className="max-h-[320px]   rounded-lg max-w-[200px] w-full object-cover"
                   />
-                  {/* Heading */}
-                  <div className="flex w-full flex-col space-y-5">
+                </div>
+                {/* Heading And Delete */}
+                <div className="flex w-full pt-3 sm:pt-0 lg:w-2/4 ">
+                  <div className="flex w-full lg:w-1/2 flex-col space-y-5">
                     <h4 className="scroll-m-20 text-xl font-normal tracking-tight">
                       {product.title}
                     </h4>
@@ -72,24 +74,24 @@ export default async function Home() {
                       ${product.price * product.quantity}
                     </h4>
                   </div>
-                </div>
-                {/* Delete and Order Count */}
-                <div className="w-1/4 flex justify-between items-end flex-col ">
-                  <div className="hover:pointer-events-auto cursor-pointer">
-                    <DeleteItem productId={product._id} />
-                  </div>
-                  <div>
-                    <EditItemQuanity
-                      QTY={product.quantity}
-                      productId={product._id}
-                    />
+                  {/* Delete and Order Count */}
+                  <div className="w-full lg:w-1/2 flex justify-between items-end flex-col ">
+                    <div className="hover:pointer-events-auto cursor-pointer">
+                      <DeleteItem productId={product._id} />
+                    </div>
+                    <div>
+                      <EditItemQuanity
+                        QTY={product.quantity}
+                        productId={product._id}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
           {/* Cart Summary */}
-          <div className="w-full p-6 bg-gray-100 sm:w-auto">
+          <div className="basis-auto md:w-full mt-12 lg:mt-3  lg:basis-1/3 w-full p-6 bg-gray-100 ">
             <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
               Order Summary
             </h4>{" "}

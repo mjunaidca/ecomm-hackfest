@@ -25,7 +25,7 @@ export async function POST(req: any, res: NextResponse) {
         quantity: item.quantity,
     };
 
-    const redirectURL = 'http://localhost:3000';
+    const redirectURL = `${process.env.Base_Url}`
     // process.env.NODE_ENV === 'development'
     //     ? 'http://localhost:3000'
     //     : 'your live vercel app link';
