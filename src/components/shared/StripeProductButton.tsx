@@ -1,14 +1,26 @@
 "use client";
-
+import { Image as IImage } from "sanity";
 import { loadStripe } from "@stripe/stripe-js";
 import { Button } from "../ui/button";
 
+interface IProduct {
+  id: number;
+  user_id: string;
+  product_id: string;
+  quantity: number;
+  title: string;
+  mainImage: IImage;
+  type: string;
+  price: number;
+  _id: string;
+}
 interface ICart {
   totalQuantity: number;
   totalPrice: number;
+  querycartData: IProduct[];
 }
 
-const StripeProduct = ({ totalQuantity, totalPrice }: ICart) => {
+const StripeProduct = ({ totalQuantity, totalPrice, querycartData }: ICart) => {
   const publishableKey = process.env
     .NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string;
   const stripePromise = loadStripe(publishableKey);
@@ -19,9 +31,11 @@ const StripeProduct = ({ totalQuantity, totalPrice }: ICart) => {
     const item = {
       price: totalPrice,
       quantity: totalQuantity,
+      cartProducts: querycartData,
     };
 
-    console.log(item);
+    // console.log(item);
+  
 
     const checkoutSession = await fetch(
       `${process.env.Base_Url}/api/create-stripe-session`,

@@ -1,8 +1,29 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
-
 import Link from "next/link";
-const Success = () => {
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+
+const Success =  () => {
+  const stripeSession = useSearchParams().get("session_id");
+
+  useEffect(() => {
+    const clearCart = async () => {
+      if (stripeSession) {
+        const res = await fetch(`${process.env.Base_Url}/api/clearcart`, {
+          method: "DELETE",
+        });
+        const data = await res.json();
+        if (!data.ok) {
+          console.log("error");
+        }
+      }
+    };
+    clearCart();
+  }, [stripeSession]);
+  console.log(stripeSession);
+
   return (
     <section className="w-full flex flex-col items-center space-y-10 justify-center my-16 rounded-2xl sm:my-9 lg:my-16 bg-gray-200 min-h-[60vh] ">
       <ShoppingBag size={80} />

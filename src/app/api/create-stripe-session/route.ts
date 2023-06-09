@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import urlFor from "@/lib/urlFor";
+
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: "2022-11-15",
@@ -7,31 +9,34 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 
 export async function POST(req: any, res: NextResponse) {
     const { item } = await req.json();
-    const transformedItem = {
+
+
+    const transformedItems = item.cartProducts.map((product: any) => ({
         price_data: {
             currency: 'usd',
             product_data: {
-                name: 'Dine Shopping Checkout',
-                // images: [item.image],
+                name: product.title,
+                images: [urlFor(product.mainImage).url()],
                 metadata: {
-                    name: "some additional info",
-                    task: "Usm created a task"
+                    product_id: product.product_id,
+                    user_id: product.user_id
                 },
-
             },
-            unit_amount: item.price * 100,
-
+            unit_amount: product.price * 100,
         },
-        quantity: item.quantity,
-    };
+        quantity: product.quantity,
+    }));
+
+
 
     const redirectURL = `${process.env.Base_Url}`
 
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
-        line_items: [transformedItem],
+        // line_items: [transformedItem],
+        line_items: transformedItems,
         mode: 'payment',
-        success_url: redirectURL + '/success',
+        success_url: `${redirectURL}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: redirectURL + '/cancel',
         metadata: {
             images: item.image,

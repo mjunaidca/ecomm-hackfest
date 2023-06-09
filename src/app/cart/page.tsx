@@ -107,6 +107,7 @@ export default async function Home() {
             <StripeProductButton
               totalPrice={totalPrice}
               totalQuantity={totalQuantity}
+              querycartData={querycartData}
             />
           </div>
         </div>

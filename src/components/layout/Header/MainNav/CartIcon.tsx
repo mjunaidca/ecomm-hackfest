@@ -18,12 +18,15 @@ export const CartIcon = () => {
   if (!data) return null;
 
   const { status } = data;
+
   let items = status;
 
   let newSum = 0;
   if (items && Array.isArray(items) && items.length > 0) {
     newSum = items.reduce((total, item) => total + item.quanity, 0); // Use 'quanity' based on your response
   } else if (data?.message === "Empty Add To Cart") {
+    newSum = 0;
+  } else if (data.status.length === 0) {
     newSum = 0;
   } else {
     console.error("Unexpected response from /api/items", data);
@@ -36,7 +39,7 @@ export const CartIcon = () => {
 
   return (
     <button onClick={handleCart}>
-      <div className="relative">
+      <div className="relative py-4">
         <div className="bg-gray-200 p-3 hover:bg-gray-200 rounded-full inline-block">
           <FiShoppingCart className="text-black w-5 h-5 rounded-full  hover:scale-110" />
         </div>

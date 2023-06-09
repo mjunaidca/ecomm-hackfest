@@ -22,7 +22,7 @@ const EditItemQuanity = ({ QTY, productId }: any) => {
     };
 
     updateQuantity();
-  }, [quantity]);
+  }, [quantity, productId]);
 
   return (
     <div className="cursor-pointer">

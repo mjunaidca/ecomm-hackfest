@@ -19,38 +19,6 @@ export const GET = async (request: NextRequest) => {
     }
 }
 
-// export const POST = async (request: NextRequest) => {
-//     const req = await request.json();
-//     // console.log('POST SERVER ID', req.product_id);
-
-//     const uid = uuid();
-//     const setCookies = cookies();
-//     const user_id = cookies().get("user_id");
-
-//     if (!user_id) {
-//         setCookies.set("user_id", uid);
-//     }
-//     // console.log('USER ID', user_id);
-
-//     try {
-//         const res = await db.insert(cartTable).values({
-//             product_id: req.product_id,
-//             quantity: req.quantity,
-//             user_id: cookies().get("user_id")?.value as string,
-//         }).returning()
-
-//         return NextResponse.json({ res })
-//     } 
-
-
-
-//     catch (error) {
-
-//     }
-
-// }
-
-
 
 export const POST = async (request: NextRequest) => {
     const req = await request.json();
@@ -69,17 +37,16 @@ export const POST = async (request: NextRequest) => {
 
         if (user_id !== undefined) {
             const productIdsArray = await db.select({ product_id: cartTable.product_id, user_id: cartTable.user_id, quantity: cartTable.quantity }).from(cartTable).where(eq(cartTable.user_id, cookies().get("user_id")?.value as string))
-            console.log('PRODUCT IDS ARRAY', productIdsArray);
+            // console.log('PRODUCT IDS ARRAY', productIdsArray);
 
             const isProductInArray = productIdsArray.some(product => product.product_id === req.product_id);
             const existingProductQuanity = productIdsArray.find(product => product.product_id === req.product_id)?.quantity;
-            console.log('EXISTING QTY', existingProductQuanity);
+            // console.log('EXISTING QTY', existingProductQuanity);
             const newQTY = existingProductQuanity + req.quantity;
 
-            console.log('NEW', newQTY);
+            // console.log('NEW', newQTY);
 
-
-            console.log(isProductInArray);
+            // console.log(isProductInArray);
 
             if (!isProductInArray) {
 
@@ -98,34 +65,19 @@ export const POST = async (request: NextRequest) => {
                     )
 
                 ).returning();
-
                 return NextResponse.json({ res })
-
             }
-
-
-
         } else {
-
             const res = await db.insert(cartTable).values({
                 product_id: req.product_id,
                 quantity: req.quantity,
                 user_id: cookies().get("user_id")?.value as string,
             }).returning()
-
             return NextResponse.json({ res })
         }
-
-
-
     }
-
-
-
     catch (error) {
-
     }
-
 }
 
 export const PATCH = async (request: NextRequest) => {
@@ -147,8 +99,10 @@ export const PATCH = async (request: NextRequest) => {
         // console.log('CALL PATCH ========= DATA', data);
 
         const res = await db.update(cartTable).set({ quantity: quantity }).where(
-            eq(cartTable.user_id, user_id)
-            && eq(cartTable.product_id, product_id)
+            and(
+                eq(cartTable.user_id, user_id),
+                eq(cartTable.product_id, product_id)
+            )
         ).returning();
 
         // console.log('PATCH ==+++====+++=== RES', res);
@@ -158,9 +112,6 @@ export const PATCH = async (request: NextRequest) => {
         // console.log(error);
         return NextResponse.json({ message: "Unabkle to Update quanitity!" })
     }
-
-
-
 }
 
 export const DELETE = async (request: NextRequest) => {
@@ -173,9 +124,12 @@ export const DELETE = async (request: NextRequest) => {
     if (!product_id || !user_id) return NextResponse.json({ message: "Missing required parameter" })
 
     try {
+
         const res = await db.delete(cartTable).where(
-            eq(cartTable.user_id, user_id)
-            && eq(cartTable.product_id, product_id)
+            and(
+                eq(cartTable.user_id, user_id),
+                eq(cartTable.product_id, product_id)
+            )
         )
 
         return NextResponse.json({ message: "Product removed" }, { status: 200 })
