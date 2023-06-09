@@ -8,7 +8,10 @@ export const Promotions = () => {
   return (
     <section className="w-full  py-9 sm:py-9 lg:py-12 ">
       <div className="flex flex-col items-center justify-center">
-        <h4 className="text-sm text-blue-700 font-bold"> PROMOTIONS</h4>
+        <h4 className="text-sm text-blue-700 font-bold tracking-wider">
+          {" "}
+          PROMOTIONS
+        </h4>
         <h2 className="scroll-m-20 text-3xl font-bold tracking-wider transition-colors first:mt-0 pt-3 ">
           Our Promotions Events
         </h2>
@@ -39,7 +42,7 @@ export const Promotions = () => {
             </div>
           </div>
         </div>
-        <div className="sm:flex sm:space-x-4 sm:flex-basis-0 sm:flex-grow">
+        <div className="sm:flex sm:space-x-4 sm:flex-basis-0 sm:flex-grow space-y-4 sm:space-y-0">
           <Image
             src={banner3}
             alt="banner 3"

@@ -1,18 +1,25 @@
 import Image from "next/image";
-
+import Link from "next/link";
+import { urlForImage } from "../../../sanity/lib/image";
 interface IProps {
-  Image: any;
+  mainImage: any;
   text: string;
   price: number;
+  link: string;
 }
 
-const ItemTypeCard = ({ Image, text, price }: IProps) => {
+const ItemTypeCard = ({ mainImage, text, price, link }: IProps) => {
   return (
-    <div>
-      <Image src={Image} alt="Header Image" />
+    <Link href={link} className="hover:scale-105 duration-700">
+      <Image
+        src={urlForImage(mainImage).url()}
+        alt="Header Image"
+        width={400}
+        height={700}
+      />
       <h3 className="font-bold text0lg mt-3">{text}</h3>
       <p className="font-bold text-lg">${price}</p>
-    </div>
+    </Link>
   );
 };
 

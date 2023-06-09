@@ -12,7 +12,7 @@ const Footer = () => {
         <Link href="/" className="">
           <Image src={LOGO} alt="Dine Marketplace" className="h-6 w-36" />
         </Link>
-        <p className="leading-7 [&:not(:first-child)]:mt-6 max-w-md">
+        <p className="leading-7 [&:not(:first-child)]:mt-6 max-w-md md:pr-2 pr-0">
           Small, artisan label that offers a thoughtfully curated collection of
           high quality everyday essentials made.
         </p>
