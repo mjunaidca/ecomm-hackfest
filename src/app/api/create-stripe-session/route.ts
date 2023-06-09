@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -11,7 +11,7 @@ export async function POST(req: any, res: NextResponse) {
         price_data: {
             currency: 'usd',
             product_data: {
-                name: 'Test',
+                name: 'Dine Shopping Checkout',
                 // images: [item.image],
                 metadata: {
                     name: "some additional info",
@@ -26,19 +26,16 @@ export async function POST(req: any, res: NextResponse) {
     };
 
     const redirectURL = `${process.env.Base_Url}`
-    // process.env.NODE_ENV === 'development'
-    //     ? 'http://localhost:3000'
-    //     : 'your live vercel app link';
 
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items: [transformedItem],
         mode: 'payment',
         success_url: redirectURL + '/success',
-        cancel_url: redirectURL + '/fail',
-        // metadata: {
-        //     images: item.image,
-        // },
+        cancel_url: redirectURL + '/cancel',
+        metadata: {
+            images: item.image,
+        },
     });
     return NextResponse.json(session?.id);
 

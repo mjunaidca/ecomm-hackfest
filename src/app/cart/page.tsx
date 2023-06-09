@@ -6,7 +6,8 @@ import EditItemQuanity from "@/components/shared/EditItemQuanity";
 import { Image as IImage } from "sanity";
 import { getdbCartData } from "@/lib/dbCartData";
 import StripeProductButton from "@/components/shared/StripeProductButton";
-import product from "../../../sanity/lib/product";
+import { ShoppingBag } from "lucide-react";
+import Link from "next/link";
 
 interface IProduct {
   id: number;
@@ -110,10 +111,19 @@ export default async function Home() {
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-center w-full">
-          <h1 className="scroll-m-20 pb-1  text-2xl lg:text-3xl xl:text-4xl font-bold tracking-tight transition-colors first:mt-0">
+        <div className="flex flex-col min-h-[60vh] items-center justify-center w-full">
+          <ShoppingBag size={80} />
+          <h1 className="scroll-m-20 pb-1 mt-7 text-2xl lg:text-3xl xl:text-4xl font-bold tracking-tight transition-colors first:mt-0">
             Your shopping bag is empty.
           </h1>
+          <Link href="/products">
+            <Button
+              type="submit"
+              className="z-40 rounded-lg px-8 py-3 cursor-pointer mt-7 "
+            >
+              Continue Shopping
+            </Button>
+          </Link>
         </div>
       )}
     </main>

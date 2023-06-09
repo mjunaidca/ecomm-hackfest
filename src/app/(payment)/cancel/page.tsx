@@ -1,20 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { ShoppingBag } from "lucide-react";
 
 import Link from "next/link";
-const Success = () => {
+const Cancel = () => {
   return (
     <section className="w-full flex flex-col items-center space-y-10 justify-center my-16 rounded-2xl sm:my-9 lg:my-16 bg-gray-200 min-h-[60vh] ">
-      <ShoppingBag size={80} />
       <h2 className="scroll-m-20 font-extrabold tracking-tight text-5xl mt-8">
-        Thank you for your order!
+        Unable To Checkout!
       </h2>
-      <p className="text-lg leading-7 mt-0">
-        Check your <span className="underline">email inbox</span> for the
-        receipt
-      </p>
       <p className="text-lg leading-7 mt-2">
-        For any questions{" "}
+        Email us at:
         <span className="text-red-600 font-semibold">
           {" "}
           ecomehackfest@gmail.com
@@ -32,4 +26,4 @@ const Success = () => {
   );
 };
 
-export default Success;
+export default Cancel;
