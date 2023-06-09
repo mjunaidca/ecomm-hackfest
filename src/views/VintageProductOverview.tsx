@@ -13,7 +13,7 @@ const VintageProductOverview = () => {
       </div>
       <div className="pt-6 lg:pt-8 flex lg:flex-row flex-col items-center justify-between space-y-12 lg:space-y-0 space-x-0 lg:space-x-7">
         <div className="flex flex-col basis-auto lg:basis-1/2 w-full sm:flex-grow space-y-4 relative">
-          <h1 className="text-8xl font-bold text-gray-100 absolute z-0 inset-0 flex items-center justify-center">
+          <h1 className=" text-6xl sm:text-7xl md:text-8xl lg:text-8xl font-bold text-gray-100 absolute z-0 inset-0 flex items-center justify-center">
             Different From Others
           </h1>
           <div className="grid grid-cols-2 gap-4 z-10 relative">

@@ -10,7 +10,7 @@ import Vercase from "../assets/Vercase.png";
 
 const Hero = () => {
   return (
-    <section className="flex-col flex w-full lg:flex-row gap-y-10 py-6 max-h-[80vh]">
+    <section className="flex-col flex w-full lg:flex-row gap-y-10 py-6 max-h-[80vh] ">
       <div className="flex-1  basis-full items-start flex flex-col space-y-16 justify-between lg:basis-[54%] pr-8">
         <div className="block items-start justify-between lg:space-y-10 xl:space-y-12 pt-10">
           <Badge
@@ -32,14 +32,14 @@ const Hero = () => {
             <ShoppingCart className="" />{" "}
             <span className="text-base"> Start Shopping</span>
           </Button>
-        </div>
 
-        <div className="sm:flex items-center sm:justify-between sm:space-x-4  pb-4 bottom-0 w-full pr-0 lg:pr-16 grid grid-cols-2">
-          <Image alt="Baztar" src={Baztar} className=" w-24 h-10" />
-          <Image alt="Bustle" src={Bustle} className=" w-24 h-10" />
+          <div className="sm:flex items-center sm:justify-between sm:space-x-4 mt-6 py-4 gap-y-3  w-full pr-0 lg:pr-16 grid grid-cols-2">
+            <Image alt="Baztar" src={Baztar} className=" w-24 h-10" />
+            <Image alt="Bustle" src={Bustle} className=" w-24 h-10" />
 
-          <Image alt="InStyle" src={InStyle} className=" w-24 h-10" />
-          <Image alt="Vercase" src={Vercase} className=" w-24 h-12" />
+            <Image alt="InStyle" src={InStyle} className=" w-24 h-10" />
+            <Image alt="Vercase" src={Vercase} className=" w-24 h-12" />
+          </div>
         </div>
       </div>
       <div className="flex-1 pt-4 hidden lg:flex items-center justify-center  basis-full lg:basis-[46%]">

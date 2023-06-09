@@ -8,7 +8,7 @@ const NewsLetter = () => {
         Subscribe Our Newsletter
       </h2>
       <div className="relative flex items-center justify-center">
-        <p className="absolute text-gray-100 z-10 font-bold text-[72px] sm:text-[92px] lg:text-[118px]">
+        <p className="absolute text-gray-100 z-10 font-bold text-[56px] sm:text-[92px] lg:text-[118px]">
           Newsletter
         </p>
 
