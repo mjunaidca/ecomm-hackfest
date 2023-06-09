@@ -1,5 +1,6 @@
 import Hero from "@/views/Hero";
 import ProductList from "@/views/ProductList";
+import { Promotions } from "@/views/Promotions";
 
 export default async function Home() {
   return (
@@ -8,6 +9,7 @@ export default async function Home() {
       {/* Hero */}
       <Hero />
       {/* Promotions Event */}
+      <Promotions />
       {/* Featured Product */}
       <ProductList />
       {/* Product Overview */}
