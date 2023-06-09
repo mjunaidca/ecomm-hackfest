@@ -5,6 +5,8 @@ import DeleteItem from "@/components/shared/DeleteItem";
 import EditItemQuanity from "@/components/shared/EditItemQuanity";
 import { Image as IImage } from "sanity";
 import { getdbCartData } from "@/lib/dbCartData";
+import StripeProductButton from "@/components/shared/StripeProductButton";
+import product from "../../../sanity/lib/product";
 
 interface IProduct {
   id: number;
@@ -95,14 +97,14 @@ export default async function Home() {
               <p className="leading-7 "> Quanity</p>
               <p className="leading-7 "> {totalQuantity} Product</p>
             </div>
-            <div className="flex justify-between items-center space-x-4 [&:not(:first-child)]:mt-6">
+            <div className="flex justify-between items-center space-x-4 [&:not(:first-child)]:mt-6 mb-3">
               <p className="leading-7 ">SubTotal</p>
               <p className="leading-7 ">$ {totalPrice}</p>
             </div>
-            <Button className="rounded-none px-10 [&:not(:first-child)]:mt-6">
-              {" "}
-              Process to checkout{" "}
-            </Button>
+            <StripeProductButton
+              totalPrice={totalPrice}
+              totalQuantity={totalQuantity}
+            />
           </div>
         </div>
       ) : (
