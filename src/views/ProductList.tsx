@@ -49,7 +49,7 @@ const ProductList = async () => {
           return (
             <div
               key={product._id}
-              className="py-6 hover:scale-105 duration-100"
+              className="py-6 hover:z-40 hover:scale-105 duration-100"
             >
               <ItemTypeCard
                 link={`/${product.slug.current}`}
