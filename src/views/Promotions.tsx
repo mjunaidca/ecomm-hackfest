@@ -17,8 +17,8 @@ export const Promotions = () => {
       </div>
       <div className="flex flex-col lg:flex-row items-start lg:space-x-7 space-y-4 lg:space-y-0">
         <div className="flex w-full lg:w-[50%] flex-col space-y-4 lg:space-y-6 lg:flex-grow self-end">
-          <div className="bg-gray-300 flex flex-col sm:flex-row items-center justify-between overflow-x-auto">
-            <span className=" p-6">
+          <div className="bg-gray-300 py-6 flex flex-col min-h-full sm:flex-row items-center justify-between overflow-x-auto">
+            <span className=" p-3 sm:p-8">
               <h3 className="scroll-m-20 text-2xl sm:text-3xl font-bold tracking-tight">
                 GET UP TO 60%
               </h3>
@@ -27,11 +27,11 @@ export const Promotions = () => {
             <Image
               src={modalImage}
               alt="modal image"
-              className="max-w-full w-auto h-auto px-3 md:px-6"
+              className="max-w-full w-auto h-auto object-cover overflow-hidden pr-5 "
             />
           </div>
-          <div className="bg-gray-800 text-white flex flex-col items-center justify-center">
-            <div className="p-12 flex flex-col items-center">
+          <div className="bg-gray-800 text-white flex min-h-full flex-col items-center justify-center">
+            <div className="p-10 flex flex-col items-center">
               <h3 className="scroll-m-20 text-4xl font-bold tracking-wider">
                 GET 30% Off
               </h3>
