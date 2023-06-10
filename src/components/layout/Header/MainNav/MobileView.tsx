@@ -14,9 +14,9 @@ const MobileView = ({ navigation }: any) => {
     setIsOpen(!isOpen);
   };
 
-  const navigateClick = (path: any) => {
-    router.push(`./${path}`);
+  const navigateClick = (path: string) => {
     setIsOpen(!isOpen);
+    router.push(`./${path}`);
   };
 
   return (
@@ -44,12 +44,12 @@ const MobileView = ({ navigation }: any) => {
             <ul className="space-y-4 text-center">
               {navigation.map((item: any, idx: any) => (
                 <li key={idx} className="text-gray-800 hover:text-gray-600">
-                  <div
+                  <button
                     className="px-2 py-1 cursor-pointer"
                     onClick={() => navigateClick(item.path)}
                   >
                     {item.title}
-                  </div>
+                  </button>
                 </li>
               ))}
             </ul>

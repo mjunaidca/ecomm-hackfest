@@ -10,7 +10,7 @@ import Vercase from "../assets/Vercase.png";
 
 const Hero = () => {
   return (
-    <section className="flex-col flex w-full lg:flex-row gap-y-10 py-6 max-h-[80vh] ">
+    <section className="flex-col flex w-full lg:flex-row gap-y-10 py-6  ">
       <div className="flex-1  basis-full items-start flex flex-col space-y-16 justify-between lg:basis-[54%] pr-8">
         <div className="block items-start justify-between lg:space-y-10 xl:space-y-12 pt-10">
           <Badge

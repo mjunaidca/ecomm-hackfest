@@ -1,5 +1,4 @@
 import ItemTypeCard from "@/components/shared/ItemTypeCard";
-import modalImage from "../assets/modals/modalf0.png";
 import { client } from "@/lib/sanityClient";
 import { Image as IImage } from "sanity";
 
@@ -30,6 +29,7 @@ interface IProduct {
     current: string;
   };
 }
+
 const ProductList = async () => {
   const data: IProduct[] = await getProductData();
 
@@ -41,7 +41,7 @@ const ProductList = async () => {
           PRODUCTS
         </h4>
         <h2 className="scroll-m-20 text-3xl font-bold tracking-wider transition-colors first:mt-0 pt-3 ">
-          Check What We Have 2{" "}
+          Check What We Have:
         </h2>
       </div>
       <div className="pt-6 lg:pt-16 flex flex-col lg:flex-row overflow-hidden overflow-y-hidden   items-center justify-between space-y-4 lg:space-y-0  space-x-0 lg:space-x-7">

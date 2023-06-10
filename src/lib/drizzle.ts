@@ -18,6 +18,16 @@ export const cartTable = pgTable("cart", {
     quantity: integer("quantity").notNull(),
 })
 
+export const userStripeTable = pgTable("user_stripe", {
+    user_id: varchar("user_id", {
+        length: 255,
+    }).notNull(),
+    stripe_id: varchar("stripe_id", {
+        length: 255,
+    }).notNull().primaryKey(),
+})
+
+
 export const db = drizzle(sql);
 
 
