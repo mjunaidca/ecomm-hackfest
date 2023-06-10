@@ -40,7 +40,7 @@ const MobileView = ({ navigation }: any) => {
             <div className="absolute top-3 left-3 p-4 text-2xl">
               <Image src={LOGO} alt="Dine Marketplace" className="h-6 w-36" />
             </div>
-            <CartIcon />
+            <CartIcon setIsOpen={setIsOpen} />
             <ul className="space-y-4 text-center">
               {navigation.map((item: any, idx: any) => (
                 <li key={idx} className="text-gray-800 hover:text-gray-600">

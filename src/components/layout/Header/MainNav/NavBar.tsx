@@ -5,6 +5,8 @@ import { CartIcon } from "./CartIcon";
 import { CiSearch } from "react-icons/ci";
 import MobileView from "./MobileView";
 import { navigation } from "@/lib/data/navigation";
+import { CartIconSk } from "@/components/skeletons/cartIconSk";
+import { Suspense } from "react";
 
 export const NavBar = () => {
   return (
@@ -30,9 +32,13 @@ export const NavBar = () => {
         <SearchBar />
       </div>
       {/* Cart */}
+
       <div className="hidden md:flex">
-        <CartIcon />
+        <Suspense fallback={<CartIconSk />}>
+          <CartIcon />
+        </Suspense>
       </div>
+
       <div className="md:hidden">
         {/* Mobile View */}
         <MobileView navigation={navigation} />

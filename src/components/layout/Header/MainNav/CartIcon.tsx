@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
-import { FiShoppingCart } from "react-icons/fi";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
-
+import { ShoppingCart } from "lucide-react";
+import { Suspense } from "react";
+import { CartIconSk } from "@/components/skeletons/cartIconSk";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export const CartIcon = () => {
+export const CartIcon = ({ setIsOpen }: { setIsOpen?: (isOpen: boolean) => void }) => {
   // const [sum, setSum] = useState(0);
   const router = useRouter();
 
@@ -16,6 +16,8 @@ export const CartIcon = () => {
   });
 
   if (!data) return null;
+
+  if (isLoading) return <CartIconSk />;
 
   const { status } = data;
 
@@ -33,21 +35,23 @@ export const CartIcon = () => {
   }
 
   const handleCart = () => {
+    setIsOpen && setIsOpen(false);
     router.refresh();
     router.push("/cart");
   };
 
   return (
     <button onClick={handleCart}>
-      <div className="relative py-4">
-        <div className="bg-gray-200 p-3 hover:bg-gray-200 rounded-full inline-block">
-          <FiShoppingCart className="text-black w-5 h-5 rounded-full  hover:scale-110" />
+      <Suspense fallback={<CartIconSk />}>
+        <div className="relative py-4">
+          <div className="bg-gray-200 p-3 hover:bg-gray-200 rounded-full inline-block">
+            <ShoppingCart className="text-black w-5 h-5 rounded-full font-extrabold  hover:scale-110" />
+          </div>
+          <span className="absolute top-0 right-0 mt-3 bg-red-600 text-gray-50 text-xs w-5 h-5 rounded-full flex items-center justify-center">
+            {newSum}
+          </span>
         </div>
-
-        <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-          {newSum}
-        </span>
-      </div>
+      </Suspense>
     </button>
   );
 };

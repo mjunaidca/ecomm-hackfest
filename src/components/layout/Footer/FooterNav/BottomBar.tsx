@@ -6,7 +6,7 @@ import { FaLinkedinIn, FaTwitter, FaFacebookF } from "react-icons/fa";
 
 const BottomBar = () => {
   return (
-    <section className="border-t-2 w-full max-w-7xl space-y-5 lg:space-y-0 flex flex-col  lg:flex-row container items-start  justify-between my-2 py-6 md:py-3">
+    <section className="border-t-2 w-full space-y-5 lg:space-y-0 flex flex-col  lg:flex-row container items-start  justify-between my-2 py-6 md:py-3">
       <div className="justify-center ">
         <p className="text-md text-muted-foreground w-full lg:w-[70%]">
           Copyright © 2022 Dine Market

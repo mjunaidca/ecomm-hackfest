@@ -7,6 +7,7 @@ import Baztar from "../assets/Baztar.png";
 import Bustle from "../assets/Bustle.png";
 import InStyle from "../assets/InStyle.png";
 import Vercase from "../assets/Vercase.png";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -27,12 +28,13 @@ const Hero = () => {
             Anyone can beat you but no one can beat your outfit as long as you
             wear Dine outfits.
           </p>
-          <Button className="bg-gray-800 rounded-none border-2 border-gray-800  h-16 px-12 mt-8 space-x-3">
-            {" "}
-            <ShoppingCart className="" />{" "}
-            <span className="text-base"> Start Shopping</span>
-          </Button>
-
+          <Link href="/products">
+            <Button className="bg-gray-800 rounded-none border-2 border-gray-800  h-16 px-12 mt-8 space-x-3">
+              {" "}
+              <ShoppingCart className="" />{" "}
+              <span className="text-base"> Start Shopping</span>
+            </Button>
+          </Link>
           <div className="sm:flex items-center sm:justify-between sm:space-x-4 mt-6 py-4 gap-y-3  w-full pr-0 lg:pr-16 grid grid-cols-2">
             <Image alt="Baztar" src={Baztar} className=" w-24 h-10" />
             <Image alt="Bustle" src={Bustle} className=" w-24 h-10" />
