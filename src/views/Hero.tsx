@@ -49,6 +49,7 @@ const Hero = () => {
           <Image
             src={HeroImage}
             alt="Header Image"
+            priority
             className="transform top-0  -translate-y-5 translate-x-1.5 " // Move the image 10% upwards
           />
         </div>

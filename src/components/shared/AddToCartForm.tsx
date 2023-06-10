@@ -7,20 +7,30 @@ import { Counter } from "./Counter";
 
 const AddToCartForm: FC<{ product: any }> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleAddToCart = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const res = await fetch("/api/cart", {
-      method: "POST",
-      body: JSON.stringify({
-        product_id: product._id,
-        quantity: quantity,
-      }),
-    });
-    if (res.status === 200) {
-      toast.success(`${quantity} ${product.title} added to cart`);
-    } else {
-      toast.error("Something went wrong");
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/cart", {
+        method: "POST",
+        body: JSON.stringify({
+          product_id: product._id,
+          quantity: quantity,
+        }),
+      });
+      if (res.status === 200) {
+        toast.success(`${quantity} ${product.title} added to cart`);
+      } else {
+        throw new Error("Something went wrong");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error adding item to cart");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -61,12 +71,13 @@ const AddToCartForm: FC<{ product: any }> = ({ product }) => {
           className=" text-base font-medium"
           type="submit"
           onClick={handleAddToCart}
+          disabled={isLoading}
         >
           {" "}
           <span className="pr-3">
             <FiShoppingCart />
           </span>{" "}
-          Add to Cart
+          {isLoading ? "Updating Cart" : "Add to Cart"}
         </Button>
         <h3 className=" text-xl lg:text-2xl font-semibold text-gray-900 tracking-tight">
           ${product.price}

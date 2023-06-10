@@ -27,7 +27,7 @@ export const Promotions = () => {
             <Image
               src={modalImage}
               alt="modal image"
-              className="max-w-full w-auto h-auto px-3"
+              className="max-w-full w-auto h-auto px-3 md:px-6"
             />
           </div>
           <div className="bg-gray-800 text-white flex flex-col items-center justify-center">

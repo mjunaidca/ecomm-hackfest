@@ -12,14 +12,30 @@ const EditItemQuanity = ({ QTY, productId }: any) => {
     const updateQuantity = async () => {
       const id = productId;
 
-      const res = await fetch(
-        `${process.env.Base_Url}/api/cart?product_id=${id}`,
-        { method: "PATCH", body: JSON.stringify({ quantity: quantity }) }
-      );
-      if (!res.ok) return;
+      try {
+        const res = await fetch(
+          `${process.env.Base_Url}/api/cart?product_id=${id}`,
+          { method: "PATCH", body: JSON.stringify({ quantity: quantity }) }
+        );
 
-      router.refresh();
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        router.refresh();
+      } catch (error) {
+        console.error('A fetch error occurred: ', error);
+      }
     };
+
+    //   const res = await fetch(
+    //     `${process.env.Base_Url}/api/cart?product_id=${id}`,
+    //     { method: "PATCH", body: JSON.stringify({ quantity: quantity }) }
+    //   );
+    //   if (!res.ok) return;
+
+    //   router.refresh();
+    // };
 
     updateQuantity();
   }, [quantity, productId]);

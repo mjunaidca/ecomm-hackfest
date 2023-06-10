@@ -1,6 +1,8 @@
 import { client } from "@/lib/sanityClient";
 import { Image as IImage } from "sanity";
 import ProductCard from "@/components/shared/ProductCard";
+import { Suspense } from "react";
+import { ProductCardSk } from "@/components/skeletons/ProductCardSk";
 const getProductData = async () => {
   const res = await client.fetch(`*[_type == "product"] {
     price, 
@@ -44,7 +46,9 @@ export default async function Home() {
             key={index}
             className="transition-transform duration-700 hover:scale-105"
           >
-            <ProductCard product={product} />
+            <Suspense fallback={<ProductCardSk />}>
+              <ProductCard product={product} />
+            </Suspense>
           </div>
         ))}
       </div>

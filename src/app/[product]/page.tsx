@@ -139,7 +139,7 @@ export default async function Home({ params }: Props) {
       <section className="flex flex-col bg-white  p-7 md:p-10">
         {/* Header */}
         <div className="relative flex items-center py-7 md:py-10">
-          <p className="absolute text-gray-100 z-10 font-bold text-[72px] sm:text-[92px] lg:text-[118px]">
+          <p className="absolute text-gray-100 z-10 font-bold text-[48px] sm:text-[84px] lg:text-[118px]">
             Overview
           </p>
 
@@ -151,7 +151,7 @@ export default async function Home({ params }: Props) {
         <hr className="border-gray-200 border-t-2 my-4" />
 
         {/* Details */}
-        <div className="flex justify-between py-5">
+        <div className="flex justify-between py-5 space-x-5 ">
           <div className="basis-1/3 w-full">
             <h4 className="scroll-m-20 text-lg text-gray-500 font-semibold tracking-tight">
               PRODUCT DETAILS:
@@ -165,7 +165,7 @@ export default async function Home({ params }: Props) {
         </div>
 
         {/* Care */}
-        <div className="flex justify-between py-5">
+        <div className="flex justify-between py-5 space-x-5">
           <div className="basis-1/3 w-full">
             <h4 className="scroll-m-20 text-lg text-gray-500 font-semibold tracking-tight">
               PRODUCT CARE:
