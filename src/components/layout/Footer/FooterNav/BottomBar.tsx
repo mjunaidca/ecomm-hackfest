@@ -19,7 +19,11 @@ const BottomBar = () => {
       </div>
       <div className=" justify-left">
         <p className="text-md text-muted-foreground w-full lg:w-[70%]">
-          Code by. <b>mjunaidca on github</b>
+          Code by.{" "}
+          <Link href="https://github.com/mjunaidca">
+            {" "}
+            <b>mjunaidca on github</b>{" "}
+          </Link>
         </p>
       </div>
     </section>
