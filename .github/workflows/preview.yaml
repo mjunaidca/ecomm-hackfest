@@ -6,8 +6,8 @@ on:
   push:
     branches:
       - deploy
-    branches-ignore:
-      - master
+    # branches-ignore:
+    #   - master
 jobs:
   Deploy-Preview:
     runs-on: ubuntu-latest
