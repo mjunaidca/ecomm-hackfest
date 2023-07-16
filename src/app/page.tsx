@@ -5,7 +5,7 @@ import { Promotions } from "@/views/Promotions";
 import VintageProductOverview from "@/views/VintageProductOverview";
 
 export default async function Home() {
-  console.log("Github Actions Test");
+  console.log("DEPLOY Github Actions Test");
 
   return (
     <main className="flex flex-col min-h-screen container  space-y-6">
