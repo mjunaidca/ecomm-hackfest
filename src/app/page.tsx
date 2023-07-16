@@ -5,6 +5,8 @@ import { Promotions } from "@/views/Promotions";
 import VintageProductOverview from "@/views/VintageProductOverview";
 
 export default async function Home() {
+  console.log("Hello World");
+
   return (
     <main className="flex flex-col min-h-screen container  space-y-6">
       {" "}
